@@ -2,58 +2,73 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
   <title>INJECT YANZZ CLASSIC</title>
 
   <!-- Font Awesome 6 (CDN) -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --bg1:#070814;
-      --bg2:#0b0d22;
-      --card:#0d0f2a;
-      --card2:#0a0b1c;
+    /* ========== RESET & GLOBAL FIX ANDROID ========== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-      --purple:#a855f7;
+    html, body {
+      width: 100%;
+      height: 100%;
+      /* fallback for older WebView */
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+
+    body {
+      font-family: "Orbitron", sans-serif;
+      background-color: #050505;
+      color: var(--text);
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    :root {
+      --bg1: #070814;
+      --bg2: #0b0d22;
+      --card: #0d0f2a;
+      --card2: #0a0b1c;
+      --purple: #a855f7;
       --vio: #7c3aed;
-      --blue:#1d4ed8;
-
-      --neon:#b56bff;
-      --text:#e9e9ff;
-      --muted:#9aa0c6;
-
-      --success:#22c55e;
-      --danger:#ef4444;
-      --warn:#f59e0b;
-
+      --blue: #1d4ed8;
+      --neon: #b56bff;
+      --text: #e9e9ff;
+      --muted: #9aa0c6;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --warn: #f59e0b;
       --glow: 0 0 12px rgba(168,85,247,.6);
       --glow2: 0 0 25px rgba(124,58,237,.45);
     }
 
-    *{box-sizing:border-box;}
-    body{
-      margin:0;
-      font-family: "Orbitron", sans-serif;
-      background-color: #050505; 
-      color:var(--text);
-      overflow-x:hidden;
-    }
-
-    /* --- BACKGROUND CANVAS STYLE --- */
+    /* CANVAS FULL LAYAR RESIZE OTOMATIS */
     #bgCanvas {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+      display: block;
       z-index: -1;
       background: radial-gradient(circle at center, #0a001a 0%, #000000 100%);
     }
 
-    /* --- NAVBAR TOP --- */
+    /* --- NAVBAR TOP (dengan safe area) --- */
     .navbar-top {
       position: sticky;
       top: 0;
@@ -64,10 +79,12 @@
       backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(168, 85, 247, 0.2);
       padding: 15px 20px;
+      padding-top: max(15px, env(safe-area-inset-top, 15px));
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 100;
+      box-sizing: border-box;
     }
     .navbar-top .brand {
       font-weight: 800;
@@ -130,16 +147,20 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* --- LOGIN SCREEN (Gaya Glassmorphism sesuai Gambar) --- */
+    /* --- LOGIN SCREEN FULL DVH (CENTER SEMPURNA) --- */
     .login-screen {
       min-height: 100vh;
+      min-height: 100dvh;
+      width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       padding: 20px;
-      z-index: 10;
       position: relative;
+      z-index: 10;
+      overflow-x: hidden;
+      box-sizing: border-box;
     }
     .login-box {
       width: 100%;
@@ -151,6 +172,7 @@
       padding: 40px 25px;
       text-align: center;
       box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+      margin: auto;
     }
     .login-box h2 {
       color: #c4b5fd;
@@ -181,7 +203,6 @@
       left: 15px;
       color: #64748b;
       font-size: 14px;
-      font-style: normal;
     }
     .input-container .toggle-pass {
       position: absolute;
@@ -240,65 +261,269 @@
       color: #475569;
     }
 
-    /* --- DASHBOARD & GENERAL APP --- */
-    .app{
+    /* --- DASHBOARD APP (PADDING BOTTOM + SAFE AREA) --- */
+    .app {
       max-width: 450px;
       margin: 0 auto;
       min-height: 100vh;
-      padding-bottom: 90px;
+      min-height: 100dvh;
+      width: 100%;
+      padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
       position: relative;
       z-index: 1;
+      overflow-x: hidden;
+      box-sizing: border-box;
     }
-    .topbar{ padding: 18px 16px 10px; display:flex; align-items:center; justify-content:space-between; }
-    .logo h1{ margin:0; font-size: 15px; letter-spacing: 1px; font-weight:800; color: #fff; text-shadow: var(--glow2); }
-    .logo span{ font-size: 11px; color: var(--muted); letter-spacing: 1px; }
-    .icon-btn{
-      width:38px; height:38px; border-radius:12px; border:1px solid rgba(168,85,247,.25);
+    .topbar { 
+      padding: 18px 16px 10px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      flex-wrap: wrap;
+    }
+    .logo h1 { 
+      margin: 0; 
+      font-size: 15px; 
+      letter-spacing: 1px; 
+      font-weight: 800; 
+      color: #fff; 
+      text-shadow: var(--glow2); 
+    }
+    .logo span { 
+      font-size: 11px; 
+      color: var(--muted); 
+      letter-spacing: 1px; 
+    }
+    .icon-btn {
+      width: 38px; 
+      height: 38px; 
+      border-radius: 12px; 
+      border: 1px solid rgba(168,85,247,.25);
       background: linear-gradient(180deg, rgba(124,58,237,.25), rgba(10,10,25,.2));
-      display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow: var(--glow); transition:.2s;
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      cursor: pointer; 
+      box-shadow: var(--glow); 
+      transition: .2s;
       font-size: 18px;
     }
-    .card{
-      margin: 10px 14px; padding: 14px; border-radius: 18px;
+    .card {
+      margin: 10px 14px; 
+      padding: 14px; 
+      border-radius: 18px;
       background: linear-gradient(180deg, rgba(13,15,42,.95), rgba(7,8,20,.95));
-      border: 1px solid rgba(168,85,247,.18); box-shadow: 0 10px 30px rgba(0,0,0,.35), var(--glow2);
+      border: 1px solid rgba(168,85,247,.18); 
+      box-shadow: 0 10px 30px rgba(0,0,0,.35), var(--glow2);
     }
-    .card-title{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
-    .card-title h2{ margin:0; font-size: 13px; letter-spacing:1px; font-weight:700; }
-    .badge{ padding:6px 10px; border-radius: 999px; font-size:10px; border:1px solid rgba(168,85,247,.25); background: rgba(168,85,247,.12); color: #fff; box-shadow: var(--glow); }
-    .list{ display:flex; flex-direction:column; gap:10px; }
-    .item{ padding:12px; border-radius:16px; border:1px solid rgba(168,85,247,.15); background: linear-gradient(180deg, rgba(10,11,28,.9), rgba(5,6,18,.9)); display:flex; align-items:center; justify-content:space-between; }
-    .item .left{ display:flex; flex-direction:column; gap:4px; max-width: 75%; }
-    .item .left strong{ font-size: 12px; letter-spacing:.8px; font-weight:700; }
-    .item .left small{ font-size: 10px; color: var(--muted); line-height:1.4; }
+    .card-title { 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      margin-bottom: 10px; 
+    }
+    .card-title h2 { 
+      margin: 0; 
+      font-size: 13px; 
+      letter-spacing: 1px; 
+      font-weight: 700; 
+    }
+    .badge { 
+      padding: 6px 10px; 
+      border-radius: 999px; 
+      font-size: 10px; 
+      border: 1px solid rgba(168,85,247,.25); 
+      background: rgba(168,85,247,.12); 
+      color: #fff; 
+      box-shadow: var(--glow); 
+    }
+    .list { 
+      display: flex; 
+      flex-direction: column; 
+      gap: 10px; 
+    }
+    .item { 
+      padding: 12px; 
+      border-radius: 16px; 
+      border: 1px solid rgba(168,85,247,.15); 
+      background: linear-gradient(180deg, rgba(10,11,28,.9), rgba(5,6,18,.9)); 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+    }
+    .item .left { 
+      display: flex; 
+      flex-direction: column; 
+      gap: 4px; 
+      max-width: 75%; 
+    }
+    .item .left strong { 
+      font-size: 12px; 
+      letter-spacing: .8px; 
+      font-weight: 700; 
+    }
+    .item .left small { 
+      font-size: 10px; 
+      color: var(--muted); 
+      line-height: 1.4; 
+    }
+    .toggle { 
+      width: 54px; 
+      height: 28px; 
+      border-radius: 999px; 
+      border: 1px solid rgba(168,85,247,.2); 
+      background: rgba(20,20,40,.7); 
+      position: relative; 
+      cursor: pointer; 
+      transition: .2s; 
+    }
+    .toggle::after { 
+      content: ""; 
+      width: 22px; 
+      height: 22px; 
+      border-radius: 50%; 
+      background: #ddd; 
+      position: absolute; 
+      top: 2px; 
+      left: 3px; 
+      transition: .2s; 
+    }
+    .toggle.on { 
+      background: var(--purple); 
+      box-shadow: var(--glow); 
+    }
+    .toggle.on::after { 
+      left: 28px; 
+      background: #fff; 
+    }
+    .btn-row { 
+      display: flex; 
+      gap: 10px; 
+      margin-top: 12px; 
+    }
+    .btn { 
+      flex: 1; 
+      padding: 12px; 
+      border-radius: 16px; 
+      border: 1px solid rgba(168,85,247,.25); 
+      background: linear-gradient(180deg, rgba(124,58,237,.45), rgba(29,78,216,.25)); 
+      color: #fff; 
+      font-weight: 800; 
+      font-size: 12px; 
+      cursor: pointer; 
+      text-align: center; 
+      transition: .2s; 
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn.secondary { 
+      background: rgba(10,11,28,.95); 
+      border: 1px solid rgba(255,255,255,0.1); 
+    }
+    .console { 
+      margin-top: 12px; 
+      border-radius: 16px; 
+      background: rgba(0,0,0,.35); 
+      padding: 12px; 
+      font-family: monospace; 
+      font-size: 11px; 
+      color: #d7d7ff; 
+      height: 120px; 
+      overflow: auto; 
+    }
+    .log-ok { color: #7CFF9B; }
+    .log-warn { color: #FFD27A; }
+    .log-info { color: #9db5ff; }
 
-    .toggle{ width: 54px; height: 28px; border-radius: 999px; border:1px solid rgba(168,85,247,.2); background: rgba(20,20,40,.7); position:relative; cursor:pointer; transition:.2s; }
-    .toggle::after{ content:""; width: 22px; height: 22px; border-radius:50%; background: #ddd; position:absolute; top:2px; left:3px; transition:.2s; }
-    .toggle.on{ background: var(--purple); box-shadow: var(--glow); }
-    .toggle.on::after{ left: 28px; background: #fff; }
-    
-    .btn-row{ display:flex; gap:10px; margin-top:12px; }
-    .btn{ flex:1; padding:12px; border-radius: 16px; border:1px solid rgba(168,85,247,.25); background: linear-gradient(180deg, rgba(124,58,237,.45), rgba(29,78,216,.25)); color:#fff; font-weight:800; font-size:12px; cursor:pointer; text-align:center; transition: .2s; }
-    .btn:active{ transform: scale(0.98); }
-    .btn.secondary{ background: rgba(10,11,28,.95); border:1px solid rgba(255,255,255,0.1); }
-    
-    .console{ margin-top:12px; border-radius:16px; background: rgba(0,0,0,.35); padding:12px; font-family: monospace; font-size:11px; color:#d7d7ff; height:120px; overflow:auto; }
-    .log-ok{color:#7CFF9B;} .log-warn{color:#FFD27A;} .log-info{color:#9db5ff;}
-
-    .navbar{ position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:450px; background: rgba(7,8,20,.95); border-top:1px solid rgba(168,85,247,.2); display:flex; justify-content:space-around; padding:10px 12px; backdrop-filter: blur(10px); z-index:50; }
-    .nav-item{ display:flex; flex-direction:column; align-items:center; gap:5px; font-size:10px; color:var(--muted); cursor:pointer; }
-    .nav-item.active{ color:#fff; }
-    .nav-item .nav-icon{ width:44px; height:32px; border-radius:14px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(168,85,247,.15); transition:.2s; font-size: 18px; }
-    .nav-item.active .nav-icon{ background: var(--purple); box-shadow: var(--glow); }
-
-    .status-bar{ margin: 10px 14px; padding: 12px; border-radius: 18px; background: rgba(10,11,28,.85); border: 1px solid rgba(168,85,247,.15); display:flex; justify-content:space-between; align-items:center; font-size:10px; color:var(--muted); }
-    .status-dot{ width:10px; height:10px; border-radius:50%; background: var(--success); box-shadow: 0 0 10px rgba(34,197,94,.6); }
-    
-    .hidden{display:none;}
+    /* NAVBAR BAWAH FIXED + SAFE AREA */
+    .navbar { 
+      position: fixed; 
+      bottom: 0; 
+      left: 50%; 
+      transform: translateX(-50%); 
+      width: 100%; 
+      max-width: 450px; 
+      background: rgba(7,8,20,.95); 
+      border-top: 1px solid rgba(168,85,247,.2); 
+      display: flex; 
+      justify-content: space-around; 
+      align-items: center;
+      padding: 10px 12px;
+      padding-bottom: max(10px, env(safe-area-inset-bottom, 10px));
+      backdrop-filter: blur(10px); 
+      z-index: 50; 
+      box-sizing: border-box;
+    }
+    .nav-item { 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      gap: 5px; 
+      font-size: 10px; 
+      color: var(--muted); 
+      cursor: pointer; 
+    }
+    .nav-item.active { color: #fff; }
+    .nav-item .nav-icon { 
+      width: 44px; 
+      height: 32px; 
+      border-radius: 14px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      border: 1px solid rgba(168,85,247,.15); 
+      transition: .2s; 
+      font-size: 18px; 
+    }
+    .nav-item.active .nav-icon { 
+      background: var(--purple); 
+      box-shadow: var(--glow); 
+    }
+    .status-bar { 
+      margin: 10px 14px; 
+      padding: 12px; 
+      border-radius: 18px; 
+      background: rgba(10,11,28,.85); 
+      border: 1px solid rgba(168,85,247,.15); 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      font-size: 10px; 
+      color: var(--muted); 
+    }
+    .status-dot { 
+      width: 10px; 
+      height: 10px; 
+      border-radius: 50%; 
+      background: var(--success); 
+      box-shadow: 0 0 10px rgba(34,197,94,.6); 
+    }
+    .hidden { display: none; }
     
     /* POPUP STYLE */
-    .popup{ position:fixed; inset:0; background: rgba(0,0,0,.75); display:flex; align-items:center; justify-content:center; z-index:999; padding:20px; }
-    .popup-box{ width:100%; max-width: 400px; border-radius: 22px; padding:20px; border:1px solid rgba(168,85,247,0.3); background: var(--bg1); text-align:center; }
+    .popup { 
+      position: fixed; 
+      inset: 0; 
+      background: rgba(0,0,0,.75); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      z-index: 999; 
+      padding: 20px; 
+    }
+    .popup-box { 
+      width: 100%; 
+      max-width: 400px; 
+      border-radius: 22px; 
+      padding: 20px; 
+      border: 1px solid rgba(168,85,247,0.3); 
+      background: var(--bg1); 
+      text-align: center; 
+    }
+    /* SATUKAN SEMUA AGAR TIDAK SCROLL HORIZONTAL */
+    .top-actions {
+      display: flex;
+      gap: 10px;
+    }
   </style>
 </head>
 
@@ -441,12 +666,17 @@
   </div>
 
   <script>
-    // --- PARTICLE SCRIPT (LENGKAP) ---
+    // --- PARTICLE SCRIPT DENGAN RESIZE HANDLER (FULL LAYAR) ---
     const canvas = document.getElementById('bgCanvas');
     const ctx = canvas.getContext('2d');
-    let particlesArray;
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    let particlesArray = [];
+
+    function resizeCanvasAndParticles() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      // reinit particles agar proporsional
+      initParticles();
+    }
 
     class Particle {
         constructor() {
@@ -472,9 +702,12 @@
     function initParticles() {
         particlesArray = [];
         let count = (canvas.height * canvas.width) / 15000;
+        if(count < 40) count = 40;
+        if(count > 300) count = 300;
         for (let i = 0; i < count; i++) particlesArray.push(new Particle());
     }
     function animateParticles() {
+        if(!ctx) return;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (let i = 0; i < particlesArray.length; i++) {
             particlesArray[i].update();
@@ -492,7 +725,13 @@
         }
         requestAnimationFrame(animateParticles);
     }
-    initParticles(); animateParticles();
+    
+    // INIT CANVAS + RESIZE HANDLER UNTUK FULL LAYAR ANDROID
+    window.addEventListener('resize', () => {
+      resizeCanvasAndParticles();
+    });
+    resizeCanvasAndParticles();
+    animateParticles();
 
     // --- LOGIN LOGIC (FIXED CREDENTIALS) ---
     function togglePassView(event) {
@@ -535,6 +774,7 @@
 
     function log(id, text, cls){
       const el = document.getElementById(id);
+      if(!el) return;
       const div = document.createElement("div");
       div.className = cls; div.innerText = text;
       el.appendChild(div); el.scrollTop = el.scrollHeight;
@@ -550,22 +790,39 @@
     function clearCache(){ log("consoleHome", "System cache cleared.", "log-warn"); }
     function optimizeAndOpen(){ log("consoleHome", "Optimizing CPU/GPU...", "log-ok"); }
     function showPopup(t, m){ 
+        let pop = document.getElementById("popup");
+        if(!pop){
+          const div = document.createElement("div");
+          div.id = "popup";
+          div.className = "popup hidden";
+          div.innerHTML = `<div class="popup-box"><h3 id="popupTitle"></h3><p id="popupText"></p><button class="btn" style="margin-top:15px;" onclick="closePopup()">OK</button></div>`;
+          document.body.appendChild(div);
+          pop = div;
+        }
         document.getElementById("popupTitle").innerText = t; 
         document.getElementById("popupText").innerText = m; 
-        document.getElementById("popup").classList.remove("hidden"); 
+        pop.classList.remove("hidden"); 
     }
-    function closePopup(){ document.getElementById("popup").classList.add("hidden"); }
+    function closePopup(){ 
+      const pop = document.getElementById("popup");
+      if(pop) pop.classList.add("hidden");
+    }
     function logout(){ location.reload(); }
 
     // --- MENU TOGGLE (Hanya 2 link: CHAT ADMIN & TESTIMONI) ---
     function toggleMenu(){
-      document.getElementById('menuDropdown').classList.toggle('show');
+      const menu = document.getElementById('menuDropdown');
+      if(menu) menu.classList.toggle('show');
     }
 
     window.onload = () => {
         const userAgent = navigator.userAgent;
-        document.getElementById("deviceInfo").innerText = "DEVICE: " + (userAgent.includes("Android") ? "ANDROID" : "BROWSER");
+        const deviceSpan = document.getElementById("deviceInfo");
+        if(deviceSpan) deviceSpan.innerText = "DEVICE: " + (userAgent.includes("Android") ? "ANDROID" : "BROWSER");
+        // mengatasi safe area dinamis setelah load
+        document.documentElement.style.setProperty('--sat', 'env(safe-area-inset-top)');
+        document.documentElement.style.setProperty('--sab', 'env(safe-area-inset-bottom)');
     };
   </script>
 </body>
-</html>
+        </html>
