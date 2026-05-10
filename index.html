@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
-  <title>INJECT YANZZ CLASSIC</title>
+  <title>INJECT YANZZ FREE</title>
 
   <!-- Font Awesome 6 (CDN) -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
@@ -20,7 +20,6 @@
     html, body {
       width: 100%;
       height: 100%;
-      /* fallback for older WebView */
       min-height: 100vh;
       min-height: 100dvh;
       overflow-x: hidden;
@@ -499,36 +498,114 @@
     }
     .hidden { display: none; }
     
-    /* POPUP STYLE */
-    .popup { 
-      position: fixed; 
-      inset: 0; 
-      background: rgba(0,0,0,.75); 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      z-index: 999; 
-      padding: 20px; 
+    /* POPUP WAJIB MODERN */
+    .popup-wajib {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      visibility: visible;
+      opacity: 1;
+      transition: visibility 0.3s, opacity 0.3s;
     }
-    .popup-box { 
-      width: 100%; 
-      max-width: 400px; 
-      border-radius: 22px; 
-      padding: 20px; 
-      border: 1px solid rgba(168,85,247,0.3); 
-      background: var(--bg1); 
-      text-align: center; 
+    .popup-wajib.hide {
+      visibility: hidden;
+      opacity: 0;
     }
-    /* SATUKAN SEMUA AGAR TIDAK SCROLL HORIZONTAL */
+    .popup-card {
+      max-width: 340px;
+      width: 85%;
+      background: linear-gradient(145deg, #0e0a1f, #030018);
+      border-radius: 32px;
+      border: 1px solid rgba(168, 85, 247, 0.5);
+      box-shadow: 0 30px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(168, 85, 247, 0.4);
+      padding: 32px 24px;
+      text-align: center;
+      transform: scale(0.9);
+      animation: popupScaleIn 0.25s ease-out forwards;
+    }
+    @keyframes popupScaleIn {
+      0% { transform: scale(0.85); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .popup-card h2 {
+      font-size: 26px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #d9a7ff, #a855f7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 5px rgba(168,85,247,0.5);
+    }
+    .popup-card p {
+      font-size: 13px;
+      color: #b9b3e6;
+      margin-bottom: 32px;
+      line-height: 1.45;
+    }
+    .popup-btn {
+      background: linear-gradient(90deg, #a855f7, #7c3aed);
+      border: none;
+      padding: 14px 0;
+      width: 100%;
+      border-radius: 60px;
+      font-weight: 800;
+      font-size: 16px;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 5px 15px rgba(124, 58, 237, 0.4);
+      font-family: "Orbitron", sans-serif;
+      letter-spacing: 2px;
+    }
+    .popup-btn:active {
+      transform: scale(0.96);
+    }
+    /* top-actions */
     .top-actions {
       display: flex;
       gap: 10px;
+    }
+
+    /* Tambahan link key */
+    .key-link {
+      margin-top: 15px;
+      text-align: center;
+    }
+    .key-link a {
+      color: #a855f7;
+      text-decoration: underline;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: 0.2s;
+    }
+    .key-link a:hover {
+      text-shadow: 0 0 6px #a855f7;
     }
   </style>
 </head>
 
 <body>
   <canvas id="bgCanvas"></canvas>
+
+  <!-- POPUP WAJIB -->
+  <div id="wajibPopup" class="popup-wajib">
+    <div class="popup-card">
+      <h2>JOIN SALURAN ADMIN!!</h2>
+      <p>JOIN SALURAN ADMIN UNTUK INFO INFO INJECT NYA!!!</p>
+      <button class="popup-btn" id="joinPopupBtn">JOIN</button>
+    </div>
+  </div>
 
   <div class="navbar-top">
     <div class="brand">YANZZ H4X</div>
@@ -543,7 +620,7 @@
 
   <div id="loginScreen" class="login-screen">
     <div class="login-box">
-      <h2>YANZZ INJECT CLASSIC</h2>
+      <h2>YANZZ INJECT FREE</h2>
       
       <div class="input-group">
         <label>Username</label>
@@ -564,6 +641,11 @@
 
       <button class="btn-login" onclick="loginUser()">Sign In &nbsp; <i class="fas fa-arrow-right"></i></button>
 
+      <!-- TAMBAHAN LINK AMBIL KEY DI SINI (SESUAI PERINTAH) -->
+      <div class="key-link">
+        <a href="https://whatsapp.com/channel/0029VbCVsTYEgGfMtq3JcP37" target="_blank" rel="noopener noreferrer">AMBIL KEY DI SINI</a>
+      </div>
+
       <div class="login-divider">
         <span>YANZZ H4X 2026</span>
       </div>
@@ -577,7 +659,7 @@
   <div id="app" class="app hidden">
     <div class="topbar">
       <div class="logo">
-        <h1>INJECT YANZZ CLASSIC</h1>
+        <h1>INJECT YANZZ FREE</h1>
         <span id="deviceInfo">DEVICE: UNKNOWN</span>
       </div>
       <div class="top-actions" style="display:flex; gap:10px;">
@@ -588,7 +670,7 @@
 
     <div class="status-bar">
       <div style="display:flex;align-items:center;gap:10px;"><div class="status-dot"></div>INJECT YANZZ v1.0</div>
-      <div style="color:#fff;">CLASSIC MODE</div>
+      <div style="color:#fff;">FREE MODE</div>
     </div>
 
     <div id="pageHome">
@@ -674,7 +756,6 @@
     function resizeCanvasAndParticles() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      // reinit particles agar proporsional
       initParticles();
     }
 
@@ -726,12 +807,44 @@
         requestAnimationFrame(animateParticles);
     }
     
-    // INIT CANVAS + RESIZE HANDLER UNTUK FULL LAYAR ANDROID
     window.addEventListener('resize', () => {
       resizeCanvasAndParticles();
     });
     resizeCanvasAndParticles();
     animateParticles();
+
+    // --- POPUP WAJIB (muncul setiap reload, tanpa localStorage) ---
+    let hasJoined = false;
+
+    function initWajibPopup() {
+      const popupElement = document.getElementById('wajibPopup');
+      if (!popupElement) return;
+      
+      if (hasJoined) {
+        popupElement.classList.add('hide');
+        return;
+      }
+      
+      popupElement.classList.remove('hide');
+      
+      const joinBtn = document.getElementById('joinPopupBtn');
+      if (joinBtn) {
+        const newJoinBtn = joinBtn.cloneNode(true);
+        joinBtn.parentNode.replaceChild(newJoinBtn, joinBtn);
+        newJoinBtn.addEventListener('click', function() {
+          window.open('https://whatsapp.com/channel/0029VbCVsTYEgGfMtq3JcP37', '_blank');
+          hasJoined = true;
+          const pop = document.getElementById('wajibPopup');
+          if (pop) {
+            pop.classList.add('hide');
+          }
+        });
+      }
+    }
+    
+    window.addEventListener('DOMContentLoaded', () => {
+      initWajibPopup();
+    });
 
     // --- LOGIN LOGIC (FIXED CREDENTIALS) ---
     function togglePassView(event) {
@@ -752,7 +865,7 @@
       const u = document.getElementById("userInp").value.trim();
       const p = document.getElementById("passInp").value.trim();
       
-      if(u === "YANZZ H4X" && p === "CLASSIC H4X"){
+      if(u === "YANZZ H4X" && p === "FREE H4X"){
         document.getElementById("loginScreen").classList.add("hidden");
         document.getElementById("app").classList.remove("hidden");
         log("consoleHome", "[SUCCESS] Access granted. Welcome YANZZ", "log-ok");
@@ -809,7 +922,6 @@
     }
     function logout(){ location.reload(); }
 
-    // --- MENU TOGGLE (Hanya 2 link: CHAT ADMIN & TESTIMONI) ---
     function toggleMenu(){
       const menu = document.getElementById('menuDropdown');
       if(menu) menu.classList.toggle('show');
@@ -819,10 +931,17 @@
         const userAgent = navigator.userAgent;
         const deviceSpan = document.getElementById("deviceInfo");
         if(deviceSpan) deviceSpan.innerText = "DEVICE: " + (userAgent.includes("Android") ? "ANDROID" : "BROWSER");
-        // mengatasi safe area dinamis setelah load
         document.documentElement.style.setProperty('--sat', 'env(safe-area-inset-top)');
         document.documentElement.style.setProperty('--sab', 'env(safe-area-inset-bottom)');
+        
+        if (!hasJoined) {
+          const popExisting = document.getElementById('wajibPopup');
+          if (popExisting && popExisting.classList.contains('hide')) {
+            popExisting.classList.remove('hide');
+            initWajibPopup();
+          }
+        }
     };
   </script>
 </body>
-</html>
+          </html>
