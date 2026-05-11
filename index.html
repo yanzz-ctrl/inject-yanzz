@@ -570,6 +570,83 @@
     .popup-btn:active {
       transform: scale(0.96);
     }
+    
+    /* ===== POPUP ERROR LOGIN (MODERN) ===== */
+    .error-popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0.25s, opacity 0.25s ease;
+    }
+    .error-popup-overlay.show {
+      visibility: visible;
+      opacity: 1;
+    }
+    .error-popup-card {
+      max-width: 320px;
+      width: 85%;
+      background: linear-gradient(145deg, #0f0c1f, #02000f);
+      border-radius: 32px;
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      box-shadow: 0 30px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(239, 68, 68, 0.3);
+      padding: 28px 20px;
+      text-align: center;
+      transform: scale(0.9);
+      animation: errorPopIn 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+    }
+    @keyframes errorPopIn {
+      0% { transform: scale(0.85); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .error-popup-card i {
+      font-size: 48px;
+      color: #ef4444;
+      margin-bottom: 16px;
+      text-shadow: 0 0 8px #ef4444;
+    }
+    .error-popup-card h3 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #ffa5a5;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+    .error-popup-card p {
+      font-size: 14px;
+      color: #e2daff;
+      margin-bottom: 28px;
+      line-height: 1.4;
+      font-weight: 500;
+    }
+    .error-close-btn {
+      background: linear-gradient(90deg, #ef4444, #b91c1c);
+      border: none;
+      padding: 12px 0;
+      width: 100%;
+      border-radius: 44px;
+      font-weight: 800;
+      font-size: 15px;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+      font-family: "Orbitron", sans-serif;
+      letter-spacing: 1.5px;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+    }
+    .error-close-btn:active {
+      transform: scale(0.97);
+    }
+
     /* top-actions */
     .top-actions {
       display: flex;
@@ -604,6 +681,16 @@
       <h2>JOIN SALURAN ADMIN!!</h2>
       <p>JOIN SALURAN ADMIN UNTUK INFO INFO INJECT NYA!!!</p>
       <button class="popup-btn" id="joinPopupBtn">JOIN</button>
+    </div>
+  </div>
+
+  <!-- POPUP ERROR LOGIN (MODERN) -->
+  <div id="errorLoginPopup" class="error-popup-overlay">
+    <div class="error-popup-card">
+      <i class="fas fa-exclamation-triangle"></i>
+      <h3>LOGIN GAGAL</h3>
+      <p>Username atau Password salah harap coba lagi!!!</p>
+      <button class="error-close-btn" id="closeErrorBtn">OK</button>
     </div>
   </div>
 
@@ -846,7 +933,7 @@
       initWajibPopup();
     });
 
-    // --- LOGIN LOGIC (FIXED CREDENTIALS) ---
+    // --- LOGIN LOGIC (FIXED CREDENTIALS) dengan POPUP ERROR MODERN ---
     function togglePassView(event) {
       const p = document.getElementById('passInp');
       const icon = event.currentTarget;
@@ -861,6 +948,22 @@
       }
     }
 
+    // Fungsi untuk menampilkan popup error login modern
+    function showErrorPopup() {
+      const errorPopup = document.getElementById('errorLoginPopup');
+      if (errorPopup) {
+        errorPopup.classList.add('show');
+      }
+    }
+
+    // Fungsi untuk menutup popup error
+    function closeErrorPopup() {
+      const errorPopup = document.getElementById('errorLoginPopup');
+      if (errorPopup) {
+        errorPopup.classList.remove('show');
+      }
+    }
+
     function loginUser(){
       const u = document.getElementById("userInp").value.trim();
       const p = document.getElementById("passInp").value.trim();
@@ -870,9 +973,27 @@
         document.getElementById("app").classList.remove("hidden");
         log("consoleHome", "[SUCCESS] Access granted. Welcome YANZZ", "log-ok");
       } else {
-        alert("Username atau Password Salah!");
+        // Ganti alert dengan popup modern
+        showErrorPopup();
       }
     }
+
+    // Event listener untuk tombol tutup popup error
+    document.addEventListener('DOMContentLoaded', function() {
+      const closeBtn = document.getElementById('closeErrorBtn');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closeErrorPopup);
+      }
+      // optional: klik overlay juga bisa nutup (tidak mengganggu perintah utama, tetapi friendly)
+      const errorOverlay = document.getElementById('errorLoginPopup');
+      if (errorOverlay) {
+        errorOverlay.addEventListener('click', function(e) {
+          if (e.target === errorOverlay) {
+            closeErrorPopup();
+          }
+        });
+      }
+    });
 
     // --- APP FEATURES ---
     function switchPage(page){
@@ -944,4 +1065,4 @@
     };
   </script>
 </body>
-          </html>
+  </html>
